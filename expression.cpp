@@ -6,7 +6,6 @@ Expression::Expression() {
     parser = new Parser();
     printer = new Printer();
     valid = new Valid();
-    cout << "Hallo\n";
 }
 
 Expression::~Expression() {
