@@ -2,7 +2,7 @@
 #include "printer.h"
 
 Printer::Printer() : currentIndex(0) {
-
+    cout << "Hallo" << endl;
 }
 
 Printer::~Printer() {
