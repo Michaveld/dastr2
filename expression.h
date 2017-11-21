@@ -14,8 +14,9 @@ public:
     void read(string input);
     string printTree();
     bool isValidExpression();
-private:
+    void printTreeInDOT(string fileName);
 
+private:
     vector<Node> tree;
     Parser *parser;
     Printer *printer;

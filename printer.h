@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "node.h"
+#include "valid.h"
 
 using namespace std;
 
@@ -11,6 +12,8 @@ public:
     Printer();
     ~Printer();
     string printTreeInOrder(vector<Node> tree);
+    void printTreeInDOT(vector<Node> tree, string fileName);
+
 private:
 
     void parseNode(vector<Node> tree, stringstream &s, constants::NodeTypes parentType, bool isLeftChild);
@@ -26,6 +29,10 @@ private:
     int currentIndex;
 
     bool needsBrackets(constants::NodeTypes parent, constants::NodeTypes child, bool isLeftChild);
+
+    void convertToDOT(vector<Node> tree, stringstream &s);
+
+    Valid *valid;
 };
 
 #endif

@@ -2,11 +2,21 @@
 
 using namespace std;
 
-ostream &operator<<(ostream &s, const Node &node) {
+ostream &operator<<(ostream &os, const Node &node) {
     if (node.type == constants::NUMBER) {
-        return s << node.value;
+        return os << node.value;
     }
     else {
-        return s << node.oper;
+        return os << node.oper;
     }
+}
+
+istream &operator>>(istream &is, Node &node) {
+    if (node.type == constants::NUMBER) {
+        is >> node.value;
+    }
+    else {
+        is >> node.oper;
+    }
+    return is;
 }

@@ -14,5 +14,6 @@ struct Node {
     int arity;
 };
 
-ostream &operator<<(ostream &s, const Node &node);
+ostream &operator<<(ostream &os, const Node &node);
+istream &operator>>(istream &is, const Node &node);
 #endif

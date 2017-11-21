@@ -22,6 +22,10 @@ string Expression::printTree() {
     return printer->printTreeInOrder(tree);
 }
 
+void Expression::printTreeInDOT(string fileName) {
+    printer->printTreeInDOT(tree, fileName);
+}
+
 bool Expression::isValidExpression() {
     return valid->arePowersValid(tree) && valid->isEveryNodeFilled(tree);
 }

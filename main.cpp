@@ -14,6 +14,7 @@ int main() {
         e->read(input);
     }
     cout << e->printTree() << endl;
+    e->printTreeInDOT("dot.txt");
 
     delete e;
     return 0;

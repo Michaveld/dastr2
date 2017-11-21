@@ -10,6 +10,7 @@ public:
     ~Valid();
     bool isEveryNodeFilled(vector<Node> tree);
     bool arePowersValid(vector<Node> tree);
+    int findIndexRightChild(int indexParent, vector<Node> tree);
 
 private:
 

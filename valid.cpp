@@ -27,14 +27,8 @@ bool Valid::areExponentsNumbers(vector<Node> tree) {
     for (int i = 0; i < tree.size(); i++) {
         emptyNodes += tree[i].arity - 1;
         if (tree[i].type == constants::POWER) {
-            int tempI = i + 1;
-            int tempEmptyNodes = emptyNodes;
-            int wantedEmptyNodes = emptyNodes - 1;
-            while (tempEmptyNodes != wantedEmptyNodes) {
-                tempEmptyNodes += tree[tempI].arity - 1;
-                tempI++;
-            }
-            if (tree[tempI].type != constants::NUMBER) {
+            int tempI = findIndexRightChild(i, tree);
+            if (tree[tempI].type != constants::NUMBER && tree[tempI].type != constants::PI) {
                 return false;
             }
         }
@@ -49,4 +43,21 @@ bool Valid::arePowersConsecutive(vector<Node> tree) {
         }
     }
     return false;
+}
+
+int Valid::findIndexRightChild(int indexParent, vector<Node> tree) {
+    if (tree[indexParent].arity == 0) {
+        return 0;
+    }
+    int i = 0;
+    int emptyNodes = 1;
+    int wantedEmptyNodes = -1;
+    while (emptyNodes != wantedEmptyNodes && i < tree.size()) {
+        if (i == indexParent) {
+            wantedEmptyNodes = emptyNodes;
+        }
+        emptyNodes += tree[i].arity - 1;
+        i++;
+    }
+    return i;
 }
