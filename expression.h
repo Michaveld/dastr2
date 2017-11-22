@@ -15,6 +15,7 @@ public:
     string printTree();
     bool isValidExpression();
     void printTreeInDOT(string fileName);
+    void clearTree();
 
 private:
     vector<Node> tree;

@@ -1,21 +1,17 @@
-#include "expression.h"
+#include "menu.h"
 
 using namespace std;
 
 int main() {
+    Menu *m = new Menu();
+
     string input;
+    string firstWord;
+    m->printMenu();
     getline(cin, input);
+    m->seperateInput(input, firstWord);
+    m->executeCommand(input, firstWord);
 
-    Expression *e = new Expression();
-    e->read(input);
-    while (!e->isValidExpression()) {
-        cout << "Invalid expression" << endl;
-        getline(cin, input);
-        e->read(input);
-    }
-    cout << e->printTree() << endl;
-    e->printTreeInDOT("dot.txt");
-
-    delete e;
+    delete m;
     return 0;
 }
