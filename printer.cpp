@@ -101,10 +101,10 @@ bool Printer::isSinOrCos(Node node) {
 
 void Printer::convertToDOT(vector<Node> tree, stringstream &s) {
     s << "digraph G {\n";
-    for (int i = 0; i < tree.size(); i++) {
+    for (unsigned int i = 0; i < tree.size(); i++) {
         s << "  " << i+1 << " [label=\"" << tree[i] << "\"]\n";
     }
-    for (int i = 0; i < tree.size(); i++) {
+    for (unsigned int i = 0; i < tree.size(); i++) {
         if (tree[i].arity == 0) {
             continue;
         }
