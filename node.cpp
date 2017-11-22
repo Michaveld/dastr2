@@ -1,3 +1,10 @@
+/**
+* node: Overloads the '<<' and '>>' operators of the Node class
+* @author Micha Veldhuijzen (s1513168)
+* @file node.cpp
+* @date 22-17-2017
+**/
+
 #include "node.h"
 
 using namespace std;

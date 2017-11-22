@@ -1,3 +1,10 @@
+/**
+* expression: Calls the relevant methods to execute the commands
+* @author Micha Veldhuijzen (s1513168)
+* @file expression.cpp
+* @date 22-11-2017
+**/
+
 #include "expression.h"
 
 using namespace std;
@@ -25,16 +32,20 @@ string Expression::printTree() {
     return printer->printTreeInOrder(tree);
 }
 
+bool Expression::isValidExpression() {
+    if (valid->arePowersValid(tree) && valid->isEveryNodeFilled(tree)) {
+        return true;
+    }
+    clearTree();
+    return false;
+}
+
 void Expression::printTreeInDOT(string fileName) {
     if (tree.empty()) {
         cout << "No expression found" << endl;
         return;
     }
     printer->printTreeInDOT(tree, fileName);
-}
-
-bool Expression::isValidExpression() {
-    return valid->arePowersValid(tree) && valid->isEveryNodeFilled(tree);
 }
 
 void Expression::clearTree() {

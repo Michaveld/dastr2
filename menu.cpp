@@ -1,3 +1,10 @@
+/**
+* menu: Prints the menu and makes sure the right methods in expression.cpp are called
+* @author Micha Veldhuijzen (s1513168)
+* @file menu.cpp
+* @date 22-17-2017
+**/
+
 #include "menu.h"
 
 using namespace std;
@@ -28,7 +35,6 @@ void Menu::executeCommand(string input, string firstWord) {
         if (firstWord == "exp") {
             e->read(input);
             if (!e->isValidExpression()) {
-                e->clearTree();
                 cout << "Invalid expression" << endl;
             }
         }

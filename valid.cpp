@@ -1,3 +1,10 @@
+/**
+* valid: Checks if the input is a valid expression
+* @author Micha Veldhuijzen (s1513168)
+* @file valid.cpp
+* @date 22-17-2017
+**/
+
 #include "valid.h"
 
 Valid::~Valid() {
@@ -22,6 +29,23 @@ bool Valid::arePowersValid(vector<Node> tree) {
     return areExponentsNumbers(tree) && !arePowersConsecutive(tree);
 }
 
+int Valid::findIndexRightChild(int indexParent, vector<Node> tree) {
+    if (tree[indexParent].arity == 0) {
+        return 0;
+    }
+    int i = 0;
+    int emptyNodes = 1;
+    int wantedEmptyNodes = -1;
+    while (emptyNodes != wantedEmptyNodes && i < tree.size()) {
+        if (i == indexParent) {
+            wantedEmptyNodes = emptyNodes;
+        }
+        emptyNodes += tree[i].arity - 1;
+        i++;
+    }
+    return i;
+}
+
 bool Valid::areExponentsNumbers(vector<Node> tree) {
     int emptyNodes = 1;
     for (int i = 0; i < tree.size(); i++) {
@@ -43,21 +67,4 @@ bool Valid::arePowersConsecutive(vector<Node> tree) {
         }
     }
     return false;
-}
-
-int Valid::findIndexRightChild(int indexParent, vector<Node> tree) {
-    if (tree[indexParent].arity == 0) {
-        return 0;
-    }
-    int i = 0;
-    int emptyNodes = 1;
-    int wantedEmptyNodes = -1;
-    while (emptyNodes != wantedEmptyNodes && i < tree.size()) {
-        if (i == indexParent) {
-            wantedEmptyNodes = emptyNodes;
-        }
-        emptyNodes += tree[i].arity - 1;
-        i++;
-    }
-    return i;
 }

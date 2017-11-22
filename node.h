@@ -1,3 +1,10 @@
+/**
+* node: Overloads the '<<' and '>>' operators of the Node class
+* @author Micha Veldhuijzen (s1513168)
+* @file node.h
+* @date 22-17-2017
+**/
+
 #ifndef node_h
 #define node_h
 

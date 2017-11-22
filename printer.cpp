@@ -1,3 +1,10 @@
+/**
+* printer: Converts the tree to a type that can be printed
+* @author Micha Veldhuijzen (s1513168)
+* @file printer.cpp
+* @date 22-17-2017
+**/
+
 #include <sstream>
 #include <fstream>
 #include "printer.h"

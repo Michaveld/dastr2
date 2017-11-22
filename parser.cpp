@@ -1,3 +1,10 @@
+/**
+* parser: Reads the input and converts it to a vector of Nodes
+* @author Micha Veldhuijzen (s1513168)
+* @file parser.cpp
+* @date 22-17-2017
+**/
+
 #include "parser.h"
 #include <sstream>
 #include <cstdlib>
