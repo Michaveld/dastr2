@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Menu::Menu() {
+Menu::Menu(bool _debugMode) : debugMode(_debugMode) {
     e = new Expression();
 }
 
@@ -47,7 +47,9 @@ void Menu::executeCommand(string input, string firstWord) {
         else {
             cout << "Wrong input, try again:\n";
         }
-        printMenu();
+        if (!debugMode) {
+            printMenu();
+        }
         getline(cin, input);
         seperateInput(input, firstWord);
     }

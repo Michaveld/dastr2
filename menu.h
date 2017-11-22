@@ -15,7 +15,7 @@ using namespace std;
 
 class Menu {
 public:
-    Menu();
+    Menu(bool _debugMode);
     ~Menu();
 
     /**
@@ -43,6 +43,7 @@ public:
     void executeCommand(string input, string firstWord);
 private:
     Expression *e;
+    bool debugMode;
 };
 
 #endif

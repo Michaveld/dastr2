@@ -9,12 +9,25 @@
 
 using namespace std;
 
-int main() {
-    Menu *m = new Menu();
+int main(int argc, char** argv) {
+    bool debugMode;
+    if (argc < 2) {
+        debugMode = false;
+    }
+    else {
+        if (string(argv[1]) == "d") {
+            debugMode = true;
+        }
+    }
+    cout << debugMode << endl;
+
+    Menu *m = new Menu(debugMode);
 
     string input;
     string firstWord;
-    m->printMenu();
+    if (!debugMode) {
+        m->printMenu();
+    }
     getline(cin, input);
     m->seperateInput(input, firstWord);
     m->executeCommand(input, firstWord);
