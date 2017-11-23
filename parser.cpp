@@ -100,7 +100,7 @@ int Parser::getArityFromType(const constants::NodeTypes &type) const {
 }
 
 bool Parser::isNumber(const string &word) const {
-    float number;
+    double number;
     istringstream s(word);
     s >> number;
     return (s.eof() && !s.fail());

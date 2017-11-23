@@ -13,6 +13,7 @@
 #include "valid.h"
 #include "simplify.h"
 #include "node.h"
+#include "evaluate.h"
 #include <vector>
 
 class Expression {
@@ -54,6 +55,8 @@ public:
 
     void simplifyTree();
 
+    void evaluateTree(double value);
+
 private:
 
     /**
@@ -62,12 +65,12 @@ private:
     * @return results in an empty tree
     **/
     void clearTree();
-
     vector<Node> tree;
     Parser *parser;
     Printer *printer;
     Valid *valid;
     Simplify *simplify;
+    Evaluate *eval;
 };
 
 #endif

@@ -5,16 +5,19 @@
 * @date 23-17-2017
 **/
 
+#include <cstdlib>
 #include "menu.h"
 
 using namespace std;
 
 Menu::Menu(bool _debugMode) : debugMode(_debugMode) {
     e = new Expression();
+    p = new Parser();
 }
 
 Menu::~Menu() {
     delete e;
+    delete p;
 }
 
 void Menu::printMenu() {
@@ -47,6 +50,12 @@ void Menu::executeCommand(string input, string firstWord) {
         }
         else if (firstWord == "simp") {
             e->simplifyTree();
+        }
+        else if (firstWord == "eval") {
+            if (p->isNumber(input)) {
+                const char *c = input.c_str();
+                e->evaluateTree(atof(c));
+            }
         }
         else {
             cout << "Wrong input, try again:\n";

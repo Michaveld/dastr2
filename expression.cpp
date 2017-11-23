@@ -14,6 +14,7 @@ Expression::Expression() {
     printer = new Printer();
     valid = new Valid();
     simplify = new Simplify();
+    eval = new Evaluate();
 }
 
 Expression::~Expression() {
@@ -21,6 +22,7 @@ Expression::~Expression() {
     delete printer;
     delete valid;
     delete simplify;
+    delete eval;
 }
 
 void Expression::read(string input) {
@@ -61,4 +63,12 @@ void Expression::simplifyTree() {
     }
     simplify->simplifyExpression(tree, 0);
     simplify->eraseNodes(tree);
+}
+
+void Expression::evaluateTree(double value) {
+    if (tree.empty()) {
+        cout << "No expression found" << endl;
+        return;
+    }
+    eval->evaluateExpression(tree, value);
 }

@@ -27,6 +27,15 @@ public:
     * @return returns a vector<Node>, which is the tree of the expression in pre-order notation
     **/
     vector<Node> parseInput(string input);
+
+    /**
+    * @function isNumber
+    * @abstract checks if the string word is a number
+    * @param word is the word to be checked
+    * @return true if word is a number, otherwise false
+    **/
+    bool isNumber(const string &word) const;
+
 private:
 
     /**
@@ -78,14 +87,6 @@ private:
     * @return returns the arity of the Node
     **/
     int getArityFromType(const constants::NodeTypes &type) const;
-
-    /**
-    * @function isNumber
-    * @abstract checks if the string word is a number
-    * @param word is the word to be checked
-    * @return true if word is a number, otherwise false
-    **/
-    bool isNumber(const string &word) const;
 
     /**
     * @function isVariable

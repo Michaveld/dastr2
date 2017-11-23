@@ -43,6 +43,7 @@ public:
     void executeCommand(string input, string firstWord);
 private:
     Expression *e;
+    Parser *p;
     bool debugMode;
 };
 
