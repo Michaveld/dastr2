@@ -2,7 +2,7 @@
 * menu: Prints the menu and makes sure the right methods in expression.cpp are called
 * @author Micha Veldhuijzen (s1513168)
 * @file menu.cpp
-* @date 22-17-2017
+* @date 23-17-2017
 **/
 
 #include "menu.h"
@@ -22,6 +22,7 @@ void Menu::printMenu() {
     cout << "exp <expressie>: een expressie invoeren\n";
     cout << "print: de opgeslagen boom printen in in-fix notatie\n";
     cout << "dot <bestandsnaam>: de boom opslaan in DOT notatie in een bestand\n";
+    cout << "simp: de boom vereenvoudigen\n";
     cout << "end: het programma afsluiten\n";
 }
 
@@ -43,6 +44,9 @@ void Menu::executeCommand(string input, string firstWord) {
         }
         else if (firstWord == "dot") {
             e->printTreeInDOT(input);
+        }
+        else if (firstWord == "simp") {
+            e->simplifyTree();
         }
         else {
             cout << "Wrong input, try again:\n";

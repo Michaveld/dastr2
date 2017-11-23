@@ -2,16 +2,17 @@
 * expression: Calls the relevant methods to execute the commands
 * @author Micha Veldhuijzen (s1513168)
 * @file expression.h
-* @date 22-17-2017
+* @date 23-17-2017
 **/
 
 #ifndef expression_h
 #define expression_h
 
 #include "parser.h"
-#include "node.h"
 #include "printer.h"
 #include "valid.h"
+#include "simplify.h"
+#include "node.h"
 #include <vector>
 
 class Expression {
@@ -51,6 +52,8 @@ public:
     **/
     void printTreeInDOT(string fileName);
 
+    void simplifyTree();
+
 private:
 
     /**
@@ -64,6 +67,7 @@ private:
     Parser *parser;
     Printer *printer;
     Valid *valid;
+    Simplify *simplify;
 };
 
 #endif

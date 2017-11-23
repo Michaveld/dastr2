@@ -2,7 +2,7 @@
 * main: Makes sure the class Menu is executed
 * @author Micha Veldhuijzen (s1513168)
 * @file main.cpp
-* @date 22-17-2017
+* @date 23-17-2017
 **/
 
 #include "menu.h"
@@ -33,5 +33,6 @@ int main(int argc, char** argv) {
     m->executeCommand(input, firstWord);
 
     delete m;
+
     return 0;
 }

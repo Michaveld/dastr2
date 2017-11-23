@@ -2,7 +2,7 @@
 * expression: Calls the relevant methods to execute the commands
 * @author Micha Veldhuijzen (s1513168)
 * @file expression.cpp
-* @date 22-11-2017
+* @date 23-11-2017
 **/
 
 #include "expression.h"
@@ -13,12 +13,14 @@ Expression::Expression() {
     parser = new Parser();
     printer = new Printer();
     valid = new Valid();
+    simplify = new Simplify();
 }
 
 Expression::~Expression() {
     delete parser;
     delete printer;
     delete valid;
+    delete simplify;
 }
 
 void Expression::read(string input) {
@@ -50,4 +52,13 @@ void Expression::printTreeInDOT(string fileName) {
 
 void Expression::clearTree() {
     tree.clear();
+}
+
+void Expression::simplifyTree() {
+    if (tree.empty()) {
+        cout << "No expression found" << endl;
+        return;
+    }
+    simplify->simplifyExpression(tree, 0);
+    simplify->eraseNodes(tree);
 }

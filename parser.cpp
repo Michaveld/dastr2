@@ -88,14 +88,11 @@ Node Parser::createNode(const string &word, const constants::NodeTypes &type, co
 }
 
 int Parser::getArityFromType(const constants::NodeTypes &type) const {
-    if (type == constants::NUMBER) {
+    if (type == constants::NUMBER || type == constants::VARIABLE || type == constants::PI) {
         return 0;
     }
     else if (type == constants::SIN || type == constants::COS) {
         return 1;
-    }
-    else if (type == constants::VARIABLE || type == constants::PI) {
-        return 0;
     }
     else {
         return 2;
