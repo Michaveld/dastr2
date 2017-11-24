@@ -19,6 +19,33 @@ Simplify::~Simplify() {
     delete valid;
 }
 
+void Simplify::performSimplification(vector<Node> &tree) {
+    while (propertiesZeroOneAndVariables(tree) && simplifyExpression(tree, 0)) {
+        eraseNodes(tree);
+    }
+}
+
+bool Simplify::propertiesZeroOneAndVariables(vector<Node> &tree) {
+    bool changed = false;
+    int i = 0;
+    while (i < tree.size()) {
+        changed = false;
+        if (tree[i].arity == 2) {
+            int indexRightChild = valid->findIndexRightChild(i, tree);
+            if (checkOperators(tree, i, indexRightChild)) {
+                changed = true;
+                eraseNodes(tree);
+            }
+        }
+        if (changed) {
+            i = 0;
+        } else {
+            i++;
+        }
+    }
+    return changed;
+}
+
 bool Simplify::simplifyExpression(vector<Node> &tree, int index) {
     if (tree[index].arity == 0) {
         if (tree[index].type == constants::VARIABLE) {
@@ -51,6 +78,7 @@ void Simplify::eraseNodes(vector<Node> &tree) {
     for (vector<int>::iterator it = nodesToBeDeleted.begin(); it != nodesToBeDeleted.end(); it++) {
         tree.erase(tree.begin() + *it);
     }
+    nodesToBeDeleted.clear();
 }
 
 void Simplify::simplifySubTree(vector<Node> &tree, int index, int indexRightChild) {
@@ -94,6 +122,9 @@ double Simplify::computeSubTree(constants::NodeTypes parentType, double valueLef
                 result = valueLeftChild * valueRightChild;
                 break;
             case 6:
+                if (valueRightChild == 0) {
+                    throw invalid_argument("Division by zero is not defined");
+                }
                 result = valueLeftChild / valueRightChild;
                 break;
             default:
@@ -106,9 +137,135 @@ double Simplify::computeSubTree(constants::NodeTypes parentType, double valueLef
 }
 
 void Simplify::sortVector(vector<int> &vec) {
-    sort(vec.begin(), vec.end(), std::greater<int>());
+    sort(vec.begin(), vec.end(), greater<int>());
 }
 
 double Simplify::roundNumber(double result, int decimals) {
     return round(result * pow(10, decimals)) / pow(10, decimals);
+}
+
+void Simplify::deleteSubTree(vector<Node> &tree, int index) {
+    int indexRightChildParent = tree.size();
+    if (index != 0) {
+        indexRightChildParent = valid->findIndexRightChild(index - 1, tree);
+    }
+    for (int i = index + 1; i < indexRightChildParent; i++) {
+        nodesToBeDeleted.push_back(i);
+    }
+    eraseNodes(tree);
+}
+
+bool Simplify::checkOperators(vector<Node> &tree, int indexParent, int indexRightChild) {
+    if (checkPlus(tree, indexParent, indexRightChild)) {
+        return true;
+    }
+    else if (checkMinus(tree, indexParent, indexRightChild)) {
+        return true;
+    }
+    else if (checkTimes(tree, indexParent, indexRightChild)) {
+        return true;
+    }
+    else if (checkDivision(tree, indexParent, indexRightChild)) {
+        return true;
+    }
+    else if (checkPower(tree, indexParent, indexRightChild)) {
+        return true;
+    }
+}
+
+bool Simplify::checkPlus(vector<Node> &tree, int indexParent, int indexRightChild) {
+    if (tree[indexParent].type == constants::PLUS) {
+        if (tree[indexParent+1].type == constants::NUMBER && tree[indexParent+1].value == 0) {
+            nodesToBeDeleted.push_back(indexParent);
+            nodesToBeDeleted.push_back(indexParent+1);
+            return true;
+        }
+        else if (tree[indexRightChild].type == constants::NUMBER && tree[indexRightChild].value == 0) {
+            nodesToBeDeleted.push_back(indexParent);
+            nodesToBeDeleted.push_back(indexRightChild);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Simplify::checkMinus(vector<Node> &tree, int indexParent, int indexRightChild) {
+    if (tree[indexParent].type == constants::MINUS) {
+        if (tree[indexParent+1].type == constants::VARIABLE && tree[indexRightChild].type == constants::VARIABLE) {
+            if (tree[indexParent+1].oper == tree[indexRightChild].oper) {
+                nodesToBeDeleted.push_back(indexParent+1);
+                nodesToBeDeleted.push_back(indexRightChild);
+                changeNodeToResult(tree[indexParent], 0);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Simplify::checkTimes(vector<Node> &tree, int indexParent, int indexRightChild) {
+    if (tree[indexParent].type == constants::TIMES) {
+        if ((tree[indexParent+1].type == constants::NUMBER && tree[indexParent+1].value == 0) ||
+            (tree[indexRightChild].type == constants::NUMBER && tree[indexRightChild].value == 0)) {
+            deleteSubTree(tree, indexParent);
+            changeNodeToResult(tree[indexParent], 0);
+            return true;
+        }
+        else if (tree[indexParent+1].type == constants::NUMBER && tree[indexParent+1].value == 1) {
+            nodesToBeDeleted.push_back(indexParent);
+            nodesToBeDeleted.push_back(indexParent+1);
+            return true;
+        }
+        else if (tree[indexRightChild].type == constants::NUMBER && tree[indexRightChild].value == 1) {
+            nodesToBeDeleted.push_back(indexParent);
+            nodesToBeDeleted.push_back(indexRightChild);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Simplify::checkDivision(vector<Node> &tree, int indexParent, int indexRightChild) {
+    if (tree[indexParent].type == constants::DIVISION) {
+        if (tree[indexRightChild].type == constants::NUMBER) {
+            if (tree[indexRightChild].value == 0) {
+                throw invalid_argument("Division by zero is not defined");
+            }
+            else if (tree[indexRightChild].value == 1) {
+                nodesToBeDeleted.push_back(indexParent);
+                nodesToBeDeleted.push_back(indexRightChild);
+                return true;
+            }
+        }
+        if (tree[indexParent+1].type == constants::NUMBER && tree[indexParent+1].value == 0) {
+            deleteSubTree(tree, indexParent);
+            changeNodeToResult(tree[indexParent], 0);
+            return true;
+        }
+        if (tree[indexParent+1].type == constants::VARIABLE && tree[indexRightChild].type == constants::VARIABLE) {
+            if (tree[indexParent+1].oper == tree[indexRightChild].oper) {
+                nodesToBeDeleted.push_back(indexParent+1);
+                nodesToBeDeleted.push_back(indexRightChild);
+                changeNodeToResult(tree[indexParent], 1);
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Simplify::checkPower(vector<Node> &tree, int indexParent, int indexRightChild) {
+    if (tree[indexParent].type == constants::POWER) {
+        if (tree[indexRightChild].type == constants::NUMBER && tree[indexRightChild].value == 0) {
+            deleteSubTree(tree, indexParent);
+            changeNodeToResult(tree[indexParent], 1);
+            return true;
+        }
+        else if (tree[indexRightChild].type == constants::NUMBER && tree[indexRightChild].value == 1) {
+            nodesToBeDeleted.push_back(indexParent);
+            nodesToBeDeleted.push_back(indexRightChild);
+            return true;
+        }
+    }
+    return false;
 }

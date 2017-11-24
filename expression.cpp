@@ -61,8 +61,7 @@ void Expression::simplifyTree() {
         cout << "No expression found" << endl;
         return;
     }
-    simplify->simplifyExpression(tree, 0);
-    simplify->eraseNodes(tree);
+    simplify->performSimplification(tree);
 }
 
 void Expression::evaluateTree(double value) {
