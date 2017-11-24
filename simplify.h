@@ -28,10 +28,13 @@ private:
     void simplifySubTree(vector<Node> &tree, int index, int indexRightChild);
     void changeNodeToResult(Node &node, double result);
     double computeSubTree(constants::NodeTypes parentType, double valueLeftChild, double valueRightChild);
+
     void sortVector(vector<int> &vec);
 
     Valid *valid;
     vector<int> nodesToBeDeleted;
+
+    double roundNumber(double result, int decimals);
 };
 
 

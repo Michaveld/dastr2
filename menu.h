@@ -31,7 +31,7 @@ public:
     * @param firstWord becomes the first word of the input
     * @return the first word of input gets removed and put in firstWord
     **/
-    void seperateInput(string &input, string &firstWord);
+    void separateInput(string &input, string &firstWord);
 
     /**
     * @function executeCommand

@@ -22,14 +22,15 @@ Menu::~Menu() {
 
 void Menu::printMenu() {
     cout << "Wat wilt u doen?\n";
-    cout << "exp <expressie>: een expressie invoeren\n";
-    cout << "print: de opgeslagen boom printen in in-fix notatie\n";
-    cout << "dot <bestandsnaam>: de boom opslaan in DOT notatie in een bestand\n";
-    cout << "simp: de boom vereenvoudigen\n";
-    cout << "end: het programma afsluiten\n";
+    cout << "exp <expressie>: een expressie invoeren.\n";
+    cout << "print: de opgeslagen boom printen in in-fix notatie.\n";
+    cout << "dot <bestandsnaam>: de boom opslaan in DOT notatie in een bestand.\n";
+    cout << "simp: de boom vereenvoudigen.\n";
+    cout << "eval: de boom evalueren met een bepaalde waarde voor x. Voert daarna meteen simp uit.\n";
+    cout << "end: het programma afsluiten.\n";
 }
 
-void Menu::seperateInput(string &input, string &firstWord) {
+void Menu::separateInput(string &input, string &firstWord) {
     firstWord = input.substr(0, input.find(' '));
     input = input.substr(input.find(' ') + 1);
 }
@@ -64,7 +65,7 @@ void Menu::executeCommand(string input, string firstWord) {
             printMenu();
         }
         getline(cin, input);
-        seperateInput(input, firstWord);
+        separateInput(input, firstWord);
     }
 }
 

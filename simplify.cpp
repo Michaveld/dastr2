@@ -37,8 +37,8 @@ bool Simplify::simplifyExpression(vector<Node> &tree, int index) {
             }
         }
         else if (tree[index].arity == 1) {
-            if (simplifyExpression(tree, indexRightChild)) {
-                simplifySubTree(tree, index, indexRightChild);
+            if (simplifyExpression(tree, index + 1)) {
+                simplifySubTree(tree, index, index + 1);
                 return true;
             }
         }
@@ -56,9 +56,11 @@ void Simplify::eraseNodes(vector<Node> &tree) {
 void Simplify::simplifySubTree(vector<Node> &tree, int index, int indexRightChild) {
     double result;
     result = computeSubTree(tree[index].type, tree[index + 1].value, tree[indexRightChild].value);
-    changeNodeToResult(tree[index], result);
     nodesToBeDeleted.push_back(index + 1);
-    nodesToBeDeleted.push_back(indexRightChild);
+    if (tree[index].arity != 1) {
+        nodesToBeDeleted.push_back(indexRightChild);
+    }
+    changeNodeToResult(tree[index], result);
 }
 
 void Simplify::changeNodeToResult(Node &node, double result) {
@@ -78,7 +80,7 @@ double Simplify::computeSubTree(constants::NodeTypes parentType, double valueLef
     }
     else {
         int i = parentType;
-        switch(i) {
+        switch (i) {
             case 0:
                 result = valueLeftChild + valueRightChild;
                 break;
@@ -99,9 +101,14 @@ double Simplify::computeSubTree(constants::NodeTypes parentType, double valueLef
                 break;
         }
     }
+    result = roundNumber(result, 4);
     return result;
 }
 
 void Simplify::sortVector(vector<int> &vec) {
     sort(vec.begin(), vec.end(), std::greater<int>());
+}
+
+double Simplify::roundNumber(double result, int decimals) {
+    return round(result * pow(10, decimals)) / pow(10, decimals);
 }

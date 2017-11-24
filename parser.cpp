@@ -76,7 +76,11 @@ Node Parser::createNode(const string &word, const constants::NodeTypes &type, co
     Node node;
     node.type = type;
     node.arity = arity;
-    if (type == constants::NUMBER) {
+    if (type == constants::PI) {
+        node.value = 3.14159265;
+        node.oper = "pi";
+    }
+    else if (type == constants::NUMBER) {
         const char* c = word.c_str();
         node.value = atof(c);
     }

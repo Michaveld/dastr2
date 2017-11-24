@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
         m->printMenu();
     }
     getline(cin, input);
-    m->seperateInput(input, firstWord);
+    m->separateInput(input, firstWord);
     m->executeCommand(input, firstWord);
 
     delete m;
