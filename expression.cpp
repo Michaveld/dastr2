@@ -15,6 +15,7 @@ Expression::Expression() {
     valid = new Valid();
     simplify = new Simplify();
     eval = new Evaluate();
+    differentiate = new Differentiate();
 }
 
 Expression::~Expression() {
@@ -23,6 +24,7 @@ Expression::~Expression() {
     delete valid;
     delete simplify;
     delete eval;
+    delete differentiate;
 }
 
 void Expression::read(string input) {
@@ -70,4 +72,13 @@ void Expression::evaluateTree(double value) {
         return;
     }
     eval->evaluateExpression(tree, value);
+}
+
+void Expression::differentiateTree() {
+    if (tree.empty()) {
+        cout << "No expression found" << endl;
+        return;
+    }
+    tree = differentiate->differentiate(tree);
+    simplify->performSimplification(tree);
 }

@@ -27,6 +27,7 @@ void Menu::printMenu() {
     cout << "dot <bestandsnaam>: de boom opslaan in DOT notatie in een bestand.\n";
     cout << "simp: de boom vereenvoudigen.\n";
     cout << "eval: de boom evalueren met een bepaalde waarde voor x. Voert daarna meteen simp uit.\n";
+    cout << "diff: de boom differencieren naar x toe.\n";
     cout << "end: het programma afsluiten.\n";
 }
 
@@ -57,6 +58,12 @@ void Menu::executeCommand(string input, string firstWord) {
                 const char *c = input.c_str();
                 e->evaluateTree(atof(c));
             }
+            else {
+                cout << "Input is not a number" << endl;
+            }
+        }
+        else if (firstWord == "diff") {
+            e->differentiateTree();
         }
         else {
             cout << "Wrong input, try again:\n";

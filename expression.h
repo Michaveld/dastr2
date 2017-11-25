@@ -14,6 +14,7 @@
 #include "simplify.h"
 #include "node.h"
 #include "evaluate.h"
+#include "differentiate.h"
 #include <vector>
 
 class Expression {
@@ -57,6 +58,8 @@ public:
 
     void evaluateTree(double value);
 
+    void differentiateTree();
+
 private:
 
     /**
@@ -71,6 +74,7 @@ private:
     Valid *valid;
     Simplify *simplify;
     Evaluate *eval;
+    Differentiate *differentiate;
 };
 
 #endif

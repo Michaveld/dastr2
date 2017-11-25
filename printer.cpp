@@ -40,7 +40,6 @@ void Printer::parseNode(vector<Node> tree, stringstream &s, constants::NodeTypes
     if (addBrackets) {
         s << "(";
     }
-
     if (isNumberOrVariable(node)) {
         s << node;
     }
@@ -63,7 +62,7 @@ bool Printer::needsBrackets(constants::NodeTypes parent, constants::NodeTypes ch
     if (parent == constants::ROOT) {
         return false;
     }
-    else if (parent == constants::SIN || parent == constants::COS) {
+    else if (parent == constants::SIN || parent == constants::COS || parent == constants::DELTA) {
         return true;
     }
     else if (child == constants::PI || child == constants::NUMBER || child == constants::VARIABLE) {

@@ -191,7 +191,29 @@ bool Simplify::checkPlus(vector<Node> &tree, int indexParent, int indexRightChil
 
 bool Simplify::checkMinus(vector<Node> &tree, int indexParent, int indexRightChild) {
     if (tree[indexParent].type == constants::MINUS) {
-        if (tree[indexParent+1].type == constants::VARIABLE && tree[indexRightChild].type == constants::VARIABLE) {
+        if (tree[indexParent+1].type == constants::NUMBER && tree[indexParent+1].value == 0) {
+            if (tree[indexRightChild].type == constants::NUMBER || tree[indexRightChild].type == constants::PI) {
+                nodesToBeDeleted.push_back(indexParent);
+                nodesToBeDeleted.push_back(indexParent+1);
+                tree[indexRightChild].value *= -1;
+                if (tree[indexRightChild].type == constants::PI) {
+                    tree[indexRightChild].type = constants::NUMBER;
+                }
+                return true;
+            }
+            else {
+                tree[indexParent].type = constants::TIMES;
+                tree[indexParent].oper = "*";
+                tree[indexParent+1].value = -1;
+                return true;
+            }
+        }
+        else if (tree[indexRightChild].type == constants::NUMBER && tree[indexRightChild].value == 0) {
+            nodesToBeDeleted.push_back(indexParent);
+            nodesToBeDeleted.push_back(indexRightChild);
+            return true;
+        }
+        else if (tree[indexParent+1].type == constants::VARIABLE && tree[indexRightChild].type == constants::VARIABLE) {
             if (tree[indexParent+1].oper == tree[indexRightChild].oper) {
                 nodesToBeDeleted.push_back(indexParent+1);
                 nodesToBeDeleted.push_back(indexRightChild);

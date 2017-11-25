@@ -12,7 +12,7 @@ using namespace std;
 
 namespace constants {
     enum NodeTypes {
-        PLUS, MINUS, NUMBER, VARIABLE, POWER, TIMES, DIVISION, SIN, COS, PI, ROOT
+        PLUS, MINUS, NUMBER, VARIABLE, POWER, TIMES, DIVISION, SIN, COS, PI, ROOT, DELTA
     };
 }
 #endif

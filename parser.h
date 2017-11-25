@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <deque>
 #include "node.h"
 #include "constants.h"
 
@@ -28,6 +29,8 @@ public:
     **/
     vector<Node> parseInput(string input);
 
+    deque<Node> dequeParseInput(string input);
+
     /**
     * @function isNumber
     * @abstract checks if the string word is a number
@@ -35,6 +38,16 @@ public:
     * @return true if word is a number, otherwise false
     **/
     bool isNumber(const string &word) const;
+
+    /**
+    * @function createNode
+    * @abstract creates a Node with properties type and arity, and value or oper from word
+    * @param word becomes the value of value or oper, depending on its type
+    * @param type becomes the type of the Node
+    * @param arity becomes the arity of the Node
+    * @return returns the Node
+    **/
+    Node createNode(const string &word, const constants::NodeTypes &type, const int &arity) const;
 
 private:
 
@@ -69,16 +82,6 @@ private:
     * @return results in the type of Node
     **/
     constants::NodeTypes getNodeTypeFromWord(const string &word) const;
-
-    /**
-    * @function createNode
-    * @abstract creates a Node with properties type and arity, and value or oper from word
-    * @param word becomes the value of value or oper, depending on its type
-    * @param type becomes the type of the Node
-    * @param arity becomes the arity of the Node
-    * @return returns the Node
-    **/
-    Node createNode(const string &word, const constants::NodeTypes &type, const int &arity) const;
 
     /**
     * @function getArityFromType

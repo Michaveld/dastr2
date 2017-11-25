@@ -24,6 +24,15 @@ vector<Node> Parser::parseInput(string input) {
     return wordsToNodes(words);
 }
 
+deque<Node> Parser::dequeParseInput(string input) {
+    vector<Node> tree = parseInput(input);
+    deque<Node> temp;
+    for (unsigned int i = 0; i < tree.size(); i++) {
+        temp.push_back(tree[i]);
+    }
+    return temp;
+}
+
 vector<string> Parser::inputToVector(const string &input) const {
     string line;
     vector<string> words;
@@ -67,6 +76,7 @@ constants::NodeTypes Parser::getNodeTypeFromWord(const string &word) const {
         if (word == "sin") {return constants::SIN;}
         if (word == "cos") {return constants::COS;}
         if (word == "pi") {return constants::PI;}
+        if (word == "delta") {return constants::DELTA;}
     }
 
     throw invalid_argument("Invalid input: " + word);
@@ -95,7 +105,7 @@ int Parser::getArityFromType(const constants::NodeTypes &type) const {
     if (type == constants::NUMBER || type == constants::VARIABLE || type == constants::PI) {
         return 0;
     }
-    else if (type == constants::SIN || type == constants::COS) {
+    else if (type == constants::SIN || type == constants::COS || type == constants::DELTA) {
         return 1;
     }
     else {
