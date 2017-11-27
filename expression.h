@@ -54,10 +54,29 @@ public:
     **/
     void printTreeInDOT(string fileName);
 
+    /**
+   * @function simplifyTree
+   * @abstract calls simplify to simplify the tree
+   * @return the tree will be simplified after the function ends
+   * @pre tree must not be empty
+   **/
     void simplifyTree();
 
+    /**
+   * @function evaluateTree
+   * @abstract calls evaluate to evaluate the tree with x = value
+   * @param value is the value which replaces all x's in the tree
+   * @return the tree will be evaluated after the function ends
+   * @pre tree must not be empty
+   **/
     void evaluateTree(double value);
 
+    /**
+   * @function differentiateTree
+   * @abstract differentiates the tree
+   * @return replaces tree with the differentiated tree and simplifies it
+   * @pre tree must not be empty
+   **/
     void differentiateTree();
 
 private:

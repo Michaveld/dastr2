@@ -20,7 +20,7 @@ Simplify::~Simplify() {
 }
 
 void Simplify::performSimplification(vector<Node> &tree) {
-    while (propertiesZeroOneAndVariables(tree) && simplifyExpression(tree, 0)) {
+    while (propertiesZeroOneAndVariables(tree) || simplifyExpression(tree, 0)) {
         eraseNodes(tree);
     }
 }
@@ -52,7 +52,7 @@ bool Simplify::simplifyExpression(vector<Node> &tree, int index) {
             return false;
         }
         else if (tree[index].type == constants::NUMBER || tree[index].type == constants::PI) {
-            return true;
+            return index != 0;
         }
     }
     else {
@@ -100,37 +100,35 @@ void Simplify::changeNodeToResult(Node &node, double result) {
 
 double Simplify::computeSubTree(constants::NodeTypes parentType, double valueLeftChild, double valueRightChild) {
     double result;
-    if (parentType == constants::SIN) {
-        result = sin(valueRightChild);
-    }
-    else if (parentType == constants::COS) {
-        result = cos(valueRightChild);
-    }
-    else {
-        int i = parentType;
-        switch (i) {
-            case 0:
-                result = valueLeftChild + valueRightChild;
-                break;
-            case 1:
-                result = valueLeftChild - valueRightChild;
-                break;
-            case 4:
-                result = pow(valueLeftChild, valueRightChild);
-                break;
-            case 5:
-                result = valueLeftChild * valueRightChild;
-                break;
-            case 6:
-                if (valueRightChild == 0) {
-                    throw invalid_argument("Division by zero is not defined");
-                }
-                result = valueLeftChild / valueRightChild;
-                break;
-            default:
-                cout << "Unable to compute" << endl;
-                break;
-        }
+    int i = parentType;
+    switch (i) {
+        case 0:
+            result = valueLeftChild + valueRightChild;
+            break;
+        case 1:
+            result = valueLeftChild - valueRightChild;
+            break;
+        case 4:
+            result = pow(valueLeftChild, valueRightChild);
+            break;
+        case 5:
+            result = valueLeftChild * valueRightChild;
+            break;
+        case 6:
+            if (valueRightChild == 0) {
+                throw invalid_argument("Division by zero is not defined");
+            }
+            result = valueLeftChild / valueRightChild;
+            break;
+        case 7:
+            result = sin(valueRightChild);
+            break;
+        case 8:
+            result = cos(valueRightChild);
+            break;
+        default:
+            cout << "Unable to compute" << endl;
+            break;
     }
     result = roundNumber(result, 4);
     return result;
@@ -171,6 +169,7 @@ bool Simplify::checkOperators(vector<Node> &tree, int indexParent, int indexRigh
     else if (checkPower(tree, indexParent, indexRightChild)) {
         return true;
     }
+    return false;
 }
 
 bool Simplify::checkPlus(vector<Node> &tree, int indexParent, int indexRightChild) {

@@ -29,6 +29,12 @@ public:
     **/
     vector<Node> parseInput(string input);
 
+    /**
+   * @function dequeParseInput
+   * @abstract calls parseInput with input and converts the resulting vector to a deque
+   * @param input is the expression to be converted to vector and then to deque
+   * @return returns the expression in a deque
+   **/
     deque<Node> dequeParseInput(string input);
 
     /**

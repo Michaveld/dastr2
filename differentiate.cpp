@@ -1,3 +1,10 @@
+/**
+* Differentiate: differentiates the expression
+* @author Micha Veldhuijzen (s1513168)
+* @file differentiate.cpp
+* @date 27-11-2017
+**/
+
 #include "differentiate.h"
 #include <sstream>
 
@@ -87,9 +94,9 @@ void Differentiate::differentiatePlusMinus(deque<Node> &tree, int index) {
     for (int i = 0; i < index; i++) {
         s << tree[i] << " ";
     }
-    string l = subtreeToStringstream(tree, index + 2);
+    string l = subtreeToString(tree, index + 2);
     int indexRightChild = lastIndexSubTree(tree, index + 2) + 1;
-    string r = subtreeToStringstream(tree, indexRightChild);
+    string r = subtreeToString(tree, indexRightChild);
     s << (tree[index+1].oper == "+" ? " +" : " -") << " delta " << l << " delta " << r << " ";
     for (int i = lastIndexSubTree(tree, indexRightChild) + 1; i < tree.size(); i++) {
         s << tree[i] << " ";
@@ -112,7 +119,7 @@ void Differentiate::differentiatePower(deque<Node> &tree, int index) {
     for (int i = 0; i < index; i++) {
         s << tree[i] << " ";
     }
-    string l = subtreeToStringstream(tree, index + 2);
+    string l = subtreeToString(tree, index + 2);
     int indexRightChild = lastIndexSubTree(tree, index + 2) + 1;
     Node rightChild = tree[indexRightChild];
     rightChild.value--;
@@ -128,9 +135,9 @@ void Differentiate::differentiateTimes(deque<Node> &tree, int index) {
     for (int i = 0; i < index; i++) {
         s << tree[i] << " ";
     }
-    string l = subtreeToStringstream(tree, index + 2);
+    string l = subtreeToString(tree, index + 2);
     int indexRightChild = lastIndexSubTree(tree, index + 2) + 1;
-    string r = subtreeToStringstream(tree, indexRightChild);
+    string r = subtreeToString(tree, indexRightChild);
     s << " + * delta " << l << " " << r << " * " << l << " delta " << r << " ";
     for (int i = lastIndexSubTree(tree, indexRightChild) + 1; i < tree.size(); i++) {
         s << tree[i] << " ";
@@ -143,9 +150,9 @@ void Differentiate::differentiateDivision(deque<Node> &tree, int index) {
     for (int i = 0; i < index; i++) {
         s << tree[i] << " ";
     }
-    string l = subtreeToStringstream(tree, index + 2);
+    string l = subtreeToString(tree, index + 2);
     int indexRightChild = lastIndexSubTree(tree, index + 2) + 1;
-    string r = subtreeToStringstream(tree, indexRightChild);
+    string r = subtreeToString(tree, indexRightChild);
     s << " / - * delta " << l << " " << r << " * " << l << " delta " << r << " ^ " << r << " 2 ";
     for (int i = lastIndexSubTree(tree, indexRightChild) + 1; i < tree.size(); i++) {
         s << tree[i] << " ";
@@ -158,7 +165,7 @@ void Differentiate::differentiateSinCos(deque<Node> &tree, int index) {
     for (int i = 0; i < index; i++) {
         s << tree[i] << " ";
     }
-    string r = subtreeToStringstream(tree, index + 2);
+    string r = subtreeToString(tree, index + 2);
     if (tree[index+1].type == constants::SIN) {
         s << " * cos " << r << " delta " << r << " ";
     }
@@ -171,7 +178,7 @@ void Differentiate::differentiateSinCos(deque<Node> &tree, int index) {
     tree = p->dequeParseInput(s.str());
 }
 
-string Differentiate::subtreeToStringstream(deque<Node> tree, int index) {
+string Differentiate::subtreeToString(deque<Node> tree, int index) {
     stringstream s;
     int indexLastNode = lastIndexSubTree(tree, index);
     s << tree[index];
