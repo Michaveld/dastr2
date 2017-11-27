@@ -37,7 +37,7 @@ int Valid::findIndexRightChild(int indexParent, vector<Node> tree) {
     int emptyNodes = 1;
     int wantedEmptyNodes = -1;
     while (emptyNodes != wantedEmptyNodes && i < tree.size()) {
-        if (i == indexParent) {
+        if (i == (unsigned)indexParent) {
             wantedEmptyNodes = emptyNodes;
         }
         emptyNodes += tree[i].arity - 1;

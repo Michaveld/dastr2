@@ -69,8 +69,8 @@ bool Simplify::simplifyExpression(vector<Node> &tree, int index) {
                 return true;
             }
         }
-        return false;
     }
+    return false;
 }
 
 void Simplify::eraseNodes(vector<Node> &tree) {
